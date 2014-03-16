@@ -1,6 +1,6 @@
 ---
 
-yabackup_mountdir: "/mny/yabackup"
+yabackup_mountdir: "/mnt/yabackup"
 yabackup_webdav_url: "https://webdav.yandex.ru"
 yabackup_owner_user: "root"
 yabackup_owner_group: "root"

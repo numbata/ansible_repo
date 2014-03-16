@@ -11,8 +11,6 @@
     path: "{{ yabackup_mountdir }}"
     owner: "{{ yabackup_owner_user }}"
     group: "{{ yabackup_owner_group }}"
-    mode: 0755
-    recurse: yes
     state: directory
 
 - name: register yandex disk credentials
