@@ -16,12 +16,17 @@
     state: directory
 
 - name: register yandex disk credentials
-  lineinfile: dest=/etc/davfs2/secrets state=present regexp="{{ yabackup_webdav_url }}"
-    insertafter=EOF line="{{ yabackup_webdav_url }} {{yabackup_webdav_user }} {{ yabackup_webdav_password }}"
-  notify: remount yabackup
+  lineinfile: >
+    dest=/etc/davfs2/secrets
+    state=present
+    regexp="{{ yabackup_webdav_url }}"
+    insertafter=EOF
+    line="{{ yabackup_webdav_url }} {{yabackup_webdav_user }} {{ yabackup_webdav_password }}"
 
 - name: mount yabackup_disk
-  mount: name="{{ yabackup_mountdir }}"
+  mount: >
+    name="{{ yabackup_mountdir }}"
+    src="{{ yabackup_webdav_url }}"
     fstype="davfs"
     opts="rw,_netdev,users,exec"
     state=mounted
