@@ -3,6 +3,8 @@
 - name: apply common configuration to all nodes
   hosts: all
   user: root
+  vars_files:
+    - "secrets/ansible_secrets.yml"
   roles:
     - common
 
@@ -21,5 +23,7 @@
 - name: setup backups
   hosts: backupserver
   user: root
+  vars_files:
+    - "secrets/ansible_secrets.yml"
   roles:
     - backup
