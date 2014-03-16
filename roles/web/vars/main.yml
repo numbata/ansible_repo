@@ -1,0 +1,5 @@
+---
+
+nginx_dir: "/etc/nginx"
+nginx_www_dir: "/var/www"
+nginx_log_dir: "/var/log/nginx/"

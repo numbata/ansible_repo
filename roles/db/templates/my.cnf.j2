@@ -1,0 +1,47 @@
+[mysqld]
+default-storage-engine         = InnoDB
+
+# SAFETY #
+max-allowed-packet             = 16M
+max-connect-errors             = 1000000
+skip-name-resolve
+innodb                         = FORCE
+innodb-strict-mode             = 1
+
+# CACHES AND LIMITS #
+tmp-table-size                 = 16M
+max-heap-table-size            = 16M
+query-cache-type               = 0
+query-cache-size               = 0
+max-connections                = 5
+thread-cache-size              = 50
+open-files-limit               = 65535
+table-definition-cache         = 8
+table-open-cache               = 8
+
+# INNODB #
+innodb-flush-method            = O_DIRECT
+innodb-log-files-in-group      = 2
+innodb-log-file-size           = 8M
+innodb-flush-log-at-trx-commit = 1
+innodb-file-per-table          = 1
+innodb-buffer-pool-size        = 8M
+
+# LOGGING #
+log-error                      = /var/log/mysql/mysql-error.log
+log-queries-not-using-indexes  = 1
+slow-query-log                 = 1
+slow-query-log-file            = /var/log/mysql/mysql-slow.log
+
+# BINARY LOGGING #
+log-bin                        = /var/log/mysql/mysql-bin
+expire-logs-days               = 3
+sync-binlog                    = 1
+
+# MyISAM #
+key_buffer_size = 8M
+sort_buffer_size = 1M
+read_buffer_size = 1M
+read_rnd_buffer_size = 1M
+myisam_sort_buffer_size = 1M
+join_buffer_size = 1M

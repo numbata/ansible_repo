@@ -1,0 +1,25 @@
+- name: add percona mysql apt key
+  apt_key: >
+    url=http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x1C4CBDCDCD2EFD2A
+    state=present
+
+- name: add percona mysql package sources
+  apt_repository: >
+    repo='deb http://repo.percona.com/apt {{ ansible_distribution_release }} main'
+    state=present
+
+- name: create mysql config
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+
+- name: install mysql packages
+  apt: >
+    pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - libmysqlclient-dev
+    - percona-server-client-5.6
+    - percona-server-common-5.6
+    - percona-server-server-5.6
+    - percona-toolkit
+    - percona-xtrabackup
+    - python-mysqldb
+

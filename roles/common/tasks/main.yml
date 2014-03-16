@@ -1,0 +1,12 @@
+---
+
+ - name: install common packages
+   apt: pkg={{ item }} state=installed update_cache=true
+   sudo: true
+   with_items:
+     - curl
+     - vim
+     - git
+     - bcrypt
+     - python-pycurl
+     - htop

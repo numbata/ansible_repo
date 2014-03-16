@@ -1,0 +1,27 @@
+---
+
+- name: install packages
+  apt: pkg={{ item }} state=installed update_cache=true
+  sudo: true
+  with_items:
+    - davfs2
+
+- name: create backup sirectory
+  file:
+    path: "{{ yabackup.mountdir }}"
+    owner: "{{ yabackup.owner_user }}"
+    group: "{{ yabackup.owner_group }}"
+    mode: 0755
+    recurse: yes
+    state: directory
+
+- name: register yandex disk credentials
+  lineinfile: dest=/etc/davfs2/secrets state=present regexp="{{ yabackup.webdav_url }}"
+    insertafter=EOF line="{{ yabackup.webdav_url }} {{yabackup.webdav_user }} {{ yabackup.webdav_password }}"
+  notify: remount yabackup
+
+- name: mount yabackup disk
+  mount: name="{{ yabackup.mountdir }}"
+    fstype="davfs"
+    opts="rw,_netdev,users,exec"
+    state=mounted
