@@ -7,3 +7,7 @@
 - name: reload nginx
   service: name=nginx state=reloaded
   sudo: yes
+
+- name: test nginx
+  command: nginx -t
+  sudo: yes

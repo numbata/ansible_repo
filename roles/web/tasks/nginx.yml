@@ -36,3 +36,36 @@
      state: present
    notify:
      - restart nginx
+
+ - name: remove default host
+   file: >
+     dest="{{nginx_dir}}/sites-available/default"
+     src="{{nginx_dir}}/sites-enabled/default"
+     state=absent
+   notify:
+     - test nginx
+
+ - name: setup custom log
+   template: >
+     src=nginx.custom_log.conf.j2
+     dest="{{nginx_dir}}/conf.d/custom_log.conf"
+   notify:
+     - restart nginx
+
+ - name: setup default host
+   template: >
+     src=nginx.default.conf.j2
+     dest="{{nginx_dir}}/sites-available/default.conf"
+   notify:
+     - test nginx
+
+ - name: enable default host
+   file: >
+     src="{{nginx_dir}}/sites-available/default.conf"
+     dest="{{nginx_dir}}/sites-enabled/default.conf"
+     state=link
+   notify:
+     - restart nginx
+
+ - name: start nginx
+   service: name=nginx state=started
