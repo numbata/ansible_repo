@@ -1,0 +1,43 @@
+ - name: install php and deps
+   apt: pkg={{ item }} state=installed update_cache=true
+   sudo: true
+   with_items:
+     - php5-common
+     - php5-cli
+     - php5-fpm
+     - php5-imagick
+     - php5-memcached
+     - php5-mysqlnd
+     - php5-mcrypt
+
+ - name: setup php timezone
+   template: >
+     src=php.timezone.ini.j2
+     dest=/etc/php5/conf.d/timezone.ini
+
+ - name: remove default provided fpm pool
+   file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+
+ - name: configure php-fpm
+   template: >
+     src=php-fpm.conf.j2
+     dest=/etc/php5/fpm/php-fpm.conf
+     owner=root
+     group=root
+     mode=0644
+   notify: php5-fpm reload
+
+ - name: create php-fpm.d directory
+   file: >
+     path="/var/www/fpm.d/"
+     state=directory
+
+ - name: create default pool
+   template: >
+     src=php-fpm.default_pool.j2
+     dest=/var/www/fpm.d/default.conf
+     owner=root group=root mode=0644
+   notify: php5-fpm reload
+
+ - name: ensure php5-fpm started
+   service: name=php5-fpm state=started enabled=yes
