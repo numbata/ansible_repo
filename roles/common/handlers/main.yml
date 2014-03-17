@@ -1,0 +1,6 @@
+---
+ - name: swapoff
+   command: swapoff -av
+
+ - name: swapon
+   command: swapon -av

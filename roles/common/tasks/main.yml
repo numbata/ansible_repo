@@ -10,3 +10,6 @@
      - bcrypt
      - python-pycurl
      - htop
+
+ - name: setup swap-file
+   include: swap.yml
