@@ -1,0 +1,32 @@
+---
+
+ - name: Prepare app directory
+   file: >
+     path="{{ sites.path }}/{{ item.0.name }}/{{ item.1 }}" state=directory
+     owner="www-data"
+     group="www-data"
+   with_nested:
+     - sites.php
+     - ["", "current", "current/public", "shared", "shared/log", "shared/config", "shared/tmp"]
+
+ - name: Create nginx configs
+   template: >
+     src="app.nginx.conf.j2"
+     dest="{{ nginx_dir }}/sites-available/{{ item.name }}"
+   with_items: sites.php
+   notify: reload nginx
+
+ - name: Create php-fpm configs
+   template: >
+     src="app.php-fpm.conf.j2"
+     dest="{{ phpfpm_confdir }}/{{ item.name }}.conf"
+   with_items: sites.php
+   notify: reload nginx
+
+ - name: Enable nginx config
+   file: >
+     src="{{ nginx_dir }}/sites-available/{{ item.name }}"
+     dest="{{ nginx_dir }}/sites-enabled/{{ item.name }}"
+     state=link
+   with_items: sites.php
+   notify: reload nginx

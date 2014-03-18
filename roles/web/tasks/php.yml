@@ -29,13 +29,13 @@
 
  - name: create php-fpm.d directory
    file: >
-     path="/var/www/fpm.d/"
+     path="{{ phpfpm_confdir }}"
      state=directory
 
  - name: create default pool
    template: >
      src=php-fpm.default_pool.j2
-     dest=/var/www/fpm.d/default.conf
+     dest={{ phpfpm_confdir }}/default.conf
      owner=root group=root mode=0644
    notify: php5-fpm reload
 

@@ -1,0 +1,37 @@
+server{
+    server_name {{ item.domain }};
+    listen 80;
+
+    client_header_buffer_size 100K;
+    client_max_body_size 20m;
+    access_log {{ sites.path }}/{{ item.name }}/shared/log/nginx.access.log main;
+    error_log {{ sites.path }}/{{ item.name }}/shared/log/nginx.error.log error;
+    root {{ sites.path }}/{{ item.name }}/current/public/;
+
+    charset         utf-8;
+    index index.php;
+
+    location / {
+        if (!-e $request_filename) {
+            access_log {{ sites.path }}/{{ item.name }}/shared/log/access.rewrite.log main;
+            rewrite  ^.*$  /index.php last;
+            break;
+        }
+    }
+
+    error_page  403  {{ sites.path }}/common/index.html;
+
+    location ~ \.php$ {
+        root {{ sites.path }}/{{ item.name }}/current/public/;
+        access_log {{ sites.path }}/{{ item.name }}/shared/log/php.access.log php_main;
+        error_log {{ sites.path }}/{{item.name }}/shared/log/php.error.log error;
+        fastcgi_pass unix:{{ sites.path }}/{{ item.name }}/shared/php.socket;
+        fastcgi_hide_header X-Powered-By;
+        fastcgi_index index.php;
+        fastcgi_connect_timeout 3600;
+        fastcgi_read_timeout 3600;
+        fastcgi_send_timeout 3600;
+        fastcgi_param SCRIPT_FILENAME {{ sites.path }}/{{ item.name }}/current/public/index.php;
+        include  fastcgi_params;
+    }
+}

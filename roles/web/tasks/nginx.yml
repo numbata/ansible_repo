@@ -4,7 +4,7 @@
 
  - name: Nginx | Make sure the nginx directory exists
    file:
-     path: "{{nginx_dir}}"
+     path: "{{ nginx_dir }}"
      owner: root
      group: root
      mode: 0755
@@ -13,7 +13,7 @@
 
  - name: Nginx | Make sure the nginx log directory exists
    file:
-     path: "{{nginx_log_dir}}"
+     path: "{{ nginx_log_dir }}"
      owner: root
      group: root
      mode: 0755
@@ -22,7 +22,7 @@
 
  - name: Nginx | Make sure the sites-available, sites-enabled and conf.d directories exist
    file:
-     path: "{{nginx_dir}}/{{item}}"
+     path: "{{ nginx_dir }}/{{ item }}"
      owner: root
      group: root
      mode: 0755
@@ -39,30 +39,36 @@
 
  - name: remove default host
    file: >
-     dest="{{nginx_dir}}/sites-available/default"
-     src="{{nginx_dir}}/sites-enabled/default"
+     dest="{{ nginx_dir }}/sites-enabled/default"
      state=absent
    notify:
      - test nginx
 
+ - name: setup nginx global variables
+   template: >
+     src=nginx.global.conf.j2
+     dest="{{ nginx_dir}}/conf.d/0_global.conf"
+   notify:
+     - restart nginx
+
  - name: setup custom log
    template: >
      src=nginx.custom_log.conf.j2
-     dest="{{nginx_dir}}/conf.d/custom_log.conf"
+     dest="{{ nginx_dir}}/conf.d/custom_log.conf"
    notify:
      - restart nginx
 
  - name: setup default host
    template: >
      src=nginx.default.conf.j2
-     dest="{{nginx_dir}}/sites-available/default.conf"
+     dest="{{ nginx_dir }}/sites-available/default.conf"
    notify:
      - test nginx
 
  - name: enable default host
    file: >
-     src="{{nginx_dir}}/sites-available/default.conf"
-     dest="{{nginx_dir}}/sites-enabled/default.conf"
+     src="{{ nginx_dir }}/sites-available/default.conf"
+     dest="{{ nginx_dir }}/sites-enabled/default.conf"
      state=link
    notify:
      - restart nginx

@@ -1,0 +1,16 @@
+[<%= {{ item.name }} %>]
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 3
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 2
+pm.max_requests = 200
+env[TMP] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
+env[TMPDIR] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
+env[TEMP] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
+listen="{{ sites.path }}/{{ item.name }}/current/public/shared/php.socket"
+access.log="{{ sites.path }}/{{ item.name }}/shared/log/fpm.access.log"
+php_admin_value[error_log]="{{ sites.path }}/{{ item.name }}/shared/log/fpm.error.log"
+php_admin_value[memory_limit]= 8M

@@ -2,3 +2,5 @@
 
  - include: nginx.yml
  - include: php.yml
+ - include: apps_php.yml
+ - include: apps_rails.yml
