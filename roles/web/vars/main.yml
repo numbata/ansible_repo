@@ -9,21 +9,31 @@ phpfpm_confdir: "/var/www/fpm.d"
 sites:
   path: "/var/www"
   php:
-    - name: "gnomiki.ru"
+    - name: "gnomiki_ru"
       domain: "gnomiki.ru"
-    - name: "forum.gnomiki.ru"
+    - name: "forum_gnomiki"
       domain: "forum.gnomiki.ru"
-    - name: "devpep.ip-studios.ru"
+    - name: "devpep"
       domain: "devpep.ip-studios.ru"
-    - name: "ip-studios.ru"
+      ipsite: true
+    - name: "ipstudios"
       domain: "ip-studios.ru"
-    - name: "napotom.me"
+      ipsite: true
+    - name: "napotom_me"
       domain: "napotom.me"
-    - name: "pepyaka.ip-studios.ru"
+      ipsite: true
+    - name: "pepyaka"
       domain: "pepyaka.ip-studios.ru"
-    - name: "swigles.ip-studios.ru"
+      ipsite: true
+    - name: "swigles"
       domain: "swigles.ip-studios.ru"
-    - name: "testzone.ip-studios.ru"
+      ipsite: true
+    - name: "testzone_ip"
       domain: "testzone.ip-studios.ru"
-    - name: "yuliya.subbota.net"
+      ipsite: true
+    - name: "yuliya"
       domain: "yuliya.subbota.net"
+      ipsite: true
+    - name: "smartforfix"
+      domain: "smartforfix.ru"
+      ipsite: true

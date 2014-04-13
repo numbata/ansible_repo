@@ -9,6 +9,7 @@
      - git
      - bcrypt
      - python-pycurl
+     - python-mysqldb
      - htop
 
  - name: create www-data user

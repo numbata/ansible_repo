@@ -8,17 +8,17 @@
   roles:
     - common
 
-- name: configure and deploy webservers and application code
-  hosts: webserver
-  user: root
-  roles:
-    - web
-
 - name: deploy MySQL and PostgreSQL
   hosts: dbserver
   user: root
   roles:
     - db
+
+- name: configure and deploy webservers and application code
+  hosts: webserver
+  user: root
+  roles:
+    - web
 
 - name: setup backups
   hosts: backupserver

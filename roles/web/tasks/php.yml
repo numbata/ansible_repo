@@ -32,12 +32,17 @@
      path="{{ phpfpm_confdir }}"
      state=directory
 
- - name: create default pool
-   template: >
-     src=php-fpm.default_pool.j2
-     dest={{ phpfpm_confdir }}/default.conf
-     owner=root group=root mode=0644
-   notify: php5-fpm reload
+ - name: remove default pool
+   file: >
+     path={{ phpfpm_confdir }}/default.conf
+     state=absent
+
+# - name: create default pool
+#   template: >
+#     src=php-fpm.default_pool.j2
+#     dest={{ phpfpm_confdir }}/default.conf
+#     owner=root group=root mode=0644
+#   notify: php5-fpm reload
 
  - name: ensure php5-fpm started
    service: name=php5-fpm state=started enabled=yes

@@ -21,7 +21,7 @@
      src="app.php-fpm.conf.j2"
      dest="{{ phpfpm_confdir }}/{{ item.name }}.conf"
    with_items: sites.php
-   notify: reload nginx
+   notify: php5-fpm reload
 
  - name: Enable nginx config
    file: >
@@ -30,3 +30,22 @@
      state=link
    with_items: sites.php
    notify: reload nginx
+
+ - name: Create mysql database
+   mysql_db: name={{ item.name }} state=present
+   with_items: sites.php
+
+ - name: Create mysql user
+   mysql_user: >
+     name="{{ item.name }}"
+     password="{{ item.name }}"
+     priv={{ item.name }}.*:ALL
+     state=present
+   with_items: sites.php
+
+ - name: setup brothers site
+   template: >
+     src="ipsite.config.php.j2"
+     dest="{{ sites.path }}/{{ item.name }}/shared/config/config.php"
+   when: item.has_key("ipsite")
+   with_items: sites.php
