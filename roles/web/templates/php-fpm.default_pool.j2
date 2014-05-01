@@ -1,15 +1,15 @@
 [default]
-prefix = /var/www/common
+prefix = {{ sites.path }}/common
 user   = www-data
 group  = www-data
 listen = /tmp/php5-fpm.sock
 
 pm                   = dynamic
-pm.max_children      = 5
-pm.start_servers     = 2
+pm.max_children      = 2
+pm.start_servers     = 1
 pm.min_spare_servers = 1
-pm.max_spare_servers = 3
-pm.max_requests      = 100
+pm.max_spare_servers = 2
+pm.max_requests      = 20
 pm.status_path       = /fpm/status
 
 ping.path     = /fpm/ping

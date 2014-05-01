@@ -47,5 +47,7 @@
    template: >
      src="ipsite.config.php.j2"
      dest="{{ sites.path }}/{{ item.name }}/shared/config/config.php"
+     owner="www-data"
+     group="www-data"
    when: item.has_key("ipsite")
    with_items: sites.php

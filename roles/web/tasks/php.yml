@@ -13,7 +13,7 @@
  - name: setup php timezone
    template: >
      src=php.timezone.ini.j2
-     dest=/etc/php5/conf.d/timezone.ini
+     dest=/etc/php5/fpm/conf.d/timezone.ini
 
  - name: remove default provided fpm pool
    file: path=/etc/php5/fpm/pool.d/www.conf state=absent
@@ -37,12 +37,17 @@
      path={{ phpfpm_confdir }}/default.conf
      state=absent
 
-# - name: create default pool
-#   template: >
-#     src=php-fpm.default_pool.j2
-#     dest={{ phpfpm_confdir }}/default.conf
-#     owner=root group=root mode=0644
-#   notify: php5-fpm reload
+ - name: create default pool
+   template: >
+     src=php-fpm.default_pool.j2
+     dest={{ phpfpm_confdir }}/default.conf
+     owner=root group=root mode=0644
+   notify: php5-fpm reload
+
+ - name: create default pool directory
+   file: >
+     path="{{ sites.path }}/common"
+     state=directory
 
  - name: ensure php5-fpm started
    service: name=php5-fpm state=started enabled=yes

@@ -2,11 +2,11 @@
 user = www-data
 group = www-data
 pm = dynamic
-pm.max_children = 3
-pm.start_servers = 2
+pm.max_children = 2
+pm.start_servers = 1
 pm.min_spare_servers = 1
 pm.max_spare_servers = 2
-pm.max_requests = 200
+pm.max_requests = 50
 env[TMP] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
 env[TMPDIR] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
 env[TEMP] = "{{ sites.path }}/{{ item.name }}/current/public/shared/tmp"
