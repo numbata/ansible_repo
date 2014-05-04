@@ -11,6 +11,7 @@
      - python-pycurl
      - python-mysqldb
      - htop
+     - mc
 
  - name: create www-data user
    user: >
