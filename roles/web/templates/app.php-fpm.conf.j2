@@ -15,3 +15,4 @@ access.log="{{ sites.path }}/{{ item.name }}/shared/log/fpm.access.log"
 php_admin_value[error_log]="{{ sites.path }}/{{ item.name }}/shared/log/fpm.error.log"
 catch_workers_output      = yes
 php_admin_value[memory_limit]= 8M
+php_admin_value[newrelic.appname] = "{{ item.name }}"
