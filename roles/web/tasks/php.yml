@@ -9,6 +9,7 @@
      - php5-memcached
      - php5-mysqlnd
      - php5-mcrypt
+     - php5-json
 
  - name: setup php timezone
    template: >
