@@ -3,11 +3,12 @@
  - name: Prepare app directory
    file: >
      path="{{ sites.path }}/{{ item.0.name }}/{{ item.1 }}" state=directory
+     recurse=true
      owner="www-data"
      group="www-data"
    with_nested:
      - sites.php
-     - ["", "current", "current/public", "shared", "shared/log", "shared/config", "shared/tmp"]
+     - ["current/public", "shared/log", "shared/config", "shared/tmp"]
 
  - name: Create nginx configs
    template: >
