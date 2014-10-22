@@ -11,6 +11,7 @@ sites:
   php:
     - name: "gnomiki_ru"
       domain: "gnomiki.ru"
+      aliases: "www.gnomiki.ru"
     - name: "forum_gnomiki"
       domain: "forum.gnomiki.ru"
     - name: "devpep"
@@ -18,9 +19,11 @@ sites:
       ipsite: true
     - name: "ipstudios"
       domain: "ip-studios.ru"
+      aliases: "www.ip-studios.ru"
       ipsite: true
     - name: "napotom_me"
       domain: "napotom.me"
+      aliases: "www.napotom.me"
       ipsite: true
     - name: "pepyaka"
       domain: "pepyaka.ip-studios.ru"
@@ -36,4 +39,5 @@ sites:
       ipsite: true
     - name: "smartforfix"
       domain: "smartforfix.ru"
+      aliases: "www.smartforfix.ru"
       ipsite: true

@@ -1,5 +1,5 @@
 server{
-    server_name {{ item.domain }};
+    server_name {{ item.domain }} {{ item.aliases | default("") }};
     listen 80;
 
     client_header_buffer_size 100K;
