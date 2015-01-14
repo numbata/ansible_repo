@@ -27,3 +27,9 @@
     - "secrets/ansible_secrets.yml"
   roles:
     - backup
+
+- name: setup Teamspeak
+  hosts: teamspeak
+  user: root
+  roles:
+    - teamspeak
