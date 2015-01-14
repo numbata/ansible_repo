@@ -14,44 +14,64 @@
 g_COMMAND="$1"
 
 g_USER="teamspeak"
-g_TS3_HOME="/home/teamspeak/teamspeak-server-{{ teamspeak_version }}/teamspeak3-server_linux-amd64"
+g_TS3_HOME="/home/teamspeak/teamspeak-server-3.0.11.2/teamspeak3-server_linux-amd64"
 g_STARTSCRIPT="$g_TS3_HOME/ts3server_startscript.sh"
 
 cd "$g_TS3_HOME"
+RETVAL=0
+
+status() {
+  sudo -u "$g_USER" "$g_STARTSCRIPT" status | grep "Server is running" | grep -v grep
+  return $?
+}
+
+restart() {
+  sudo -u "$g_USER" "$g_STARTSCRIPT" restart
+  return $?
+}
 
 case "$g_COMMAND" in
     status)
-        sudo -u "$g_USER" "$g_STARTSCRIPT" status
-        exit "$?"
+        status
+        if [ $? -eq 0 ]; then
+          echo "Teamspeak is running"
+          RETVAL=0
+        else
+          echo "Teamspeak is stopped"
+          RETVAL=1
+        fi
         ;;
     start)
         echo "Starting TeamSpeak 3 server..."
         sudo -u "$g_USER" "$g_STARTSCRIPT" start
-        exit "$?"
+        RETVAL=$?
         ;;
     stop)
         echo "Stopping TeamSpeak 3 server..."
-        sudo -u "$g_USER" "$g_STARTSCRIPT" stop
-        exit "$?"
+        status
+        if [ $? -eq 0 ]; then
+          sudo -u "$g_USER" "$g_STARTSCRIPT" stop
+          RETVAL=$?
+        else
+          echo "Already stopped"
+        fi
         ;;
     reload)
         echo "Reload is not supported. Restarting instead..."
-        sudo -u "$g_USER" "$g_STARTSCRIPT" restart
-        exit "$?"
+        restart
         ;;
     force-reload)
         echo "Reload is not supported. Restarting instead..."
-        sudo -u "$g_USER" "$g_STARTSCRIPT" restart
-        exit "$?"
+        restart
         ;;
     restart)
         echo "Restarting TeamSpeak 3 server..."
-        sudo -u "$g_USER" "$g_STARTSCRIPT" restart
-        exit "$?"
+        restart
         ;;
     *)
         echo "Usage: $0 {status|start|stop|restart}"
-        exit 2
+        RETVAL=2
         ;;
 esac
 
+exit $RETVAL

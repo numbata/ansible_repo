@@ -37,7 +37,7 @@
   register: teamspeak_initscript_modified
 
 - name: stop teamspeak
-  service: name=teamspeak3 state=stopped
+  service: name=teamspeak-server state=stopped
   sudo: yes
   when: teamspeak_initscript_modified|changed
 
