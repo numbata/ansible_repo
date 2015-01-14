@@ -14,7 +14,7 @@
 g_COMMAND="$1"
 
 g_USER="teamspeak"
-g_TS3_HOME="/home/teamspeak/teamspeak-server-3.0.11.2/teamspeak3-server_linux-amd64"
+g_TS3_HOME="/home/teamspeak/teamspeak-server-{{ teamspeak_version }}/teamspeak3-server_linux-amd64"
 g_STARTSCRIPT="$g_TS3_HOME/ts3server_startscript.sh"
 
 cd "$g_TS3_HOME"
