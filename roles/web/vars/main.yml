@@ -37,6 +37,7 @@ sites:
     - name: "yuliya"
       domain: "yuliya.subbota.net"
       ipsite: true
+      disable: true
     - name: "smartforfix"
       domain: "smartforfix.ru"
       aliases: "www.smartforfix.ru"
